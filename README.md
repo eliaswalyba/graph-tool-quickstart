@@ -571,7 +571,7 @@ savefig("assets/price-deg-dist.svg")
 
 
 
-![png](output_81_1.png)
+![png](assets/output_81_1.png)
 
 
 In-degree distribution of a price network with 105 nodes.
