@@ -70,17 +70,17 @@ The above code creates a directed edge from v1 to v2. We can visualize the graph
 
 
 ```python
-graph_draw(g, vertex_text=g.vertex_index, output="graph.png")
+graph_draw(g, vertex_text=g.vertex_index, output="assets/graph.png")
 ```
 
 
 
 
-    <VertexPropertyMap object with value type 'vector<double>', for Graph 0x7f1920fd2400, at 0x7f1920eac490>
+    <VertexPropertyMap object with value type 'vector<double>', for Graph 0x7f18ed2835e0, at 0x7f1920eaca90>
 
 
 
-<img src="graph.png" width=250 height=250/>
+<img src="assets/graph.png" width=250 height=250/>
 <p style="text-align: center;">A simple directed graph with two vertices and one edge, created by the commands above.</p>
 
 With vertex and edge descriptors, one can examine and manipulate the graph in an arbitrary manner. For instance, in order to obtain the out-degree of a vertex, we can simply call the out_degree() method:
@@ -436,8 +436,8 @@ A graph can be saved or loaded to a file with the save and load methods, which t
 ```python
 g = Graph()
 #  ... fill the graph ...
-g.save("my_graph.xml.gz")
-g2 = load_graph("my_graph.xml.gz")
+g.save("assets/my_graph.xml.gz")
+g2 = load_graph("assets/my_graph.xml.gz")
 # g and g2 should be copies of each other
 ```
 
@@ -532,7 +532,7 @@ g.vertex_properties["age"] = v_age
 g.edge_properties["age"] = e_age
 
 # now we can save it
-g.save("price.xml.gz")
+g.save("assets/price.xml.gz")
 
 
 # Let's plot its in-degree distribution
@@ -553,8 +553,8 @@ subplots_adjust(left=0.2, bottom=0.2)
 xlabel("$k_{in}$")
 ylabel("$NP(k_{in})$")
 tight_layout()
-savefig("price-deg-dist.pdf")
-savefig("price-deg-dist.svg")
+savefig("assets/price-deg-dist.pdf")
+savefig("assets/price-deg-dist.svg")
 ```
 
     vertex: 36063 in-degree: 0 out-degree: 1 age: 36063
@@ -582,13 +582,13 @@ We can draw the graph to see some other features of its topology. For that we us
 
 
 ```python
-g = load_graph("price.xml.gz")
+g = load_graph("assets/price.xml.gz")
 age = g.vertex_properties["age"]
 
 pos = sfdp_layout(g)
 graph_draw(g, pos, output_size=(1000, 1000), vertex_color=[1,1,1,0],
            vertex_fill_color=age, vertex_size=1, edge_pen_width=1.2,
-           vcmap=matplotlib.cm.gist_heat_r, output="price.png")
+           vcmap=matplotlib.cm.gist_heat_r, output="assets/price.png")
 ```
 
 
@@ -598,7 +598,7 @@ graph_draw(g, pos, output_size=(1000, 1000), vertex_color=[1,1,1,0],
 
 
 
-<img src="price.png" width=750 height=750 />
+<img src="assets/price.png" width=750 height=750 />
 <p style="text-align: center;">A Price network with 105 nodes. The vertex colors represent the age of the vertex, from older (red) to newer (black).</p>
 
 ## Graph filtering
@@ -613,38 +613,38 @@ Here is an example which obtains the minimum spanning tree of a graph, using the
 ```python
 g, pos = triangulation(random((500, 2)) * 4, type="delaunay")
 tree = min_spanning_tree(g)
-graph_draw(g, pos=pos, edge_color=tree, output="min_tree.svg")
+graph_draw(g, pos=pos, edge_color=tree, output="assets/min_tree.svg")
 ```
 
 
 
 
-    <VertexPropertyMap object with value type 'vector<double>', for Graph 0x7f18ed210e20, at 0x7f18ed210a90>
+    <VertexPropertyMap object with value type 'vector<double>', for Graph 0x7f1938bc7370, at 0x7f18ed2130d0>
 
 
 
 The tree property map has a bool type, with value “1” if the edge belongs to the tree, and “0” otherwise. Below is an image of the original graph, with the marked edges.
 
-<img src="min_tree.svg" width=500 height=500 />
+<img src="assets/min_tree.svg" width=500 height=500 />
 
 We can now filter out the edges which don’t belong to the minimum spanning tree.
 
 
 ```python
 g.set_edge_filter(tree)
-graph_draw(g, pos=pos, output="min_tree_filtered.svg")
+graph_draw(g, pos=pos, output="assets/min_tree_filtered.svg")
 ```
 
 
 
 
-    <VertexPropertyMap object with value type 'vector<double>', for Graph 0x7f18ed210e20, at 0x7f18ed210a90>
+    <VertexPropertyMap object with value type 'vector<double>', for Graph 0x7f1938bc7370, at 0x7f18ed2130d0>
 
 
 
 This is how the graph looks when filtered:
 
-<img src="min_tree_filtered.svg" height=500 width=500 />
+<img src="assets/min_tree_filtered.svg" height=500 width=500 />
 
 Everything should work transparently on the filtered graph, simply as if the masked edges were removed. For instance, the following code will calculate the betweenness() centrality of the edges and vertices, and draws them as colors and line thickness in the graph.
 
@@ -653,17 +653,17 @@ Everything should work transparently on the filtered graph, simply as if the mas
 bv, be = betweenness(g)
 be.a /= be.a.max() / 5
 graph_draw(g, pos=pos, vertex_fill_color=bv, edge_pen_width=be,
-           output="filtered-bt.svg")
+           output="assets/filtered-bt.svg")
 ```
 
 
 
 
-    <VertexPropertyMap object with value type 'vector<double>', for Graph 0x7f18ed210e20, at 0x7f18ed210a90>
+    <VertexPropertyMap object with value type 'vector<double>', for Graph 0x7f1938bc7370, at 0x7f18ed2130d0>
 
 
 
-<img src="filtered-bt.svg" height=500 width=500 />
+<img src="assets/filtered-bt.svg" height=500 width=500 />
 
 The original graph can be recovered by setting the edge filter to None.
 
@@ -673,17 +673,17 @@ g.set_edge_filter(None)
 bv, be = betweenness(g)
 be.a /= be.a.max() / 5
 graph_draw(g, pos=pos, vertex_fill_color=bv, edge_pen_width=be,
-           output="nonfiltered-bt.svg")
+           output="assets/nonfiltered-bt.svg")
 ```
 
 
 
 
-    <VertexPropertyMap object with value type 'vector<double>', for Graph 0x7f18ed210e20, at 0x7f18ed210a90>
+    <VertexPropertyMap object with value type 'vector<double>', for Graph 0x7f1938bc7370, at 0x7f18ed2130d0>
 
 
 
-<img src="nonfiltered-bt.svg" height=500 width=500 />
+<img src="assets/nonfiltered-bt.svg" height=500 width=500 />
 
 Everything works in analogous fashion with vertex filtering.
 
@@ -723,17 +723,17 @@ Like above, the result should be the isolated minimum spanning tree:
 ```python
 bv, be = betweenness(tv)
 be.a /= be.a.max() / 5
-graph_draw(tv, pos=pos, vertex_fill_color=bv, edge_pen_width=be, output="mst-view.svg")
+graph_draw(tv, pos=pos, vertex_fill_color=bv, edge_pen_width=be, output="assets/mst-view.svg")
 ```
 
 
 
 
-    <VertexPropertyMap object with value type 'vector<double>', for Graph 0x7f18ed210e20, at 0x7f18ed210a90>
+    <VertexPropertyMap object with value type 'vector<double>', for Graph 0x7f1938bc7370, at 0x7f18ed2130d0>
 
 
 
-<img src="mst-view.svg" height=500 width=500/>
+<img src="assets/mst-view.svg" height=500 width=500/>
 <p style="text-align: center;">A view of the Delaunay graph, isolating only the minimum spanning tree</p>
 
 **Note**: GraphView objects behave exactly like regular Graph objects. In fact, GraphView is a subclass of Graph. The only difference is that a GraphView object shares its internal data with its parent Graph class. Therefore, if the original Graph object is modified, this modification will be reflected immediately in the GraphView object, and vice versa.
@@ -753,17 +753,17 @@ The graph view constructed above can be visualized as
 
 ```python
 be.a /= be.a.max() / 5
-graph_draw(u, pos=pos, vertex_fill_color=bv, output="central-edges-view.svg")
+graph_draw(u, pos=pos, vertex_fill_color=bv, output="assets/central-edges-view.svg")
 ```
 
 
 
 
-    <VertexPropertyMap object with value type 'vector<double>', for Graph 0x7f18ed210e20, at 0x7f18ed210a90>
+    <VertexPropertyMap object with value type 'vector<double>', for Graph 0x7f1938bc7370, at 0x7f18ed2130d0>
 
 
 
-<img src="central-edges-view.svg" height=500 width=500 />
+<img src="assets/central-edges-view.svg" height=500 width=500 />
 
 #### Composing graph views
 
@@ -780,15 +780,15 @@ The resulting graph view can be visualized as
 
 
 ```python
-graph_draw(u, pos=pos, output="composed-filter.svg")
+graph_draw(u, pos=pos, output="assets/composed-filter.svg")
 ```
 
 
 
 
-    <VertexPropertyMap object with value type 'vector<double>', for Graph 0x7f18ed210e20, at 0x7f18ed210a90>
+    <VertexPropertyMap object with value type 'vector<double>', for Graph 0x7f1938bc7370, at 0x7f18ed2130d0>
 
 
 
-<img src="composed-filter.svg" height=500 width=500 />
+<img src="assets/composed-filter.svg" height=500 width=500 />
 <p style="text-align: center;">A composed view, obtained as the minimum spanning tree of all vertices in the graph which have a degree larger than four.</p>
