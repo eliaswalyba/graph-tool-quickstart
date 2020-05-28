@@ -571,10 +571,9 @@ savefig("assets/price-deg-dist.svg")
 
 
 
-![png](assets/output_81_1.png)
+<img src="assets/output_81_1.png" width=750 height=750 />
+<p style="text-align: center;">In-degree distribution of a price network with 105 nodes..</p>
 
-
-In-degree distribution of a price network with 105 nodes.
 
 Above is the degree distribution, with 105 nodes (in order to the asymptotic behavior to be even clearer, the number of vertices needs to be increased to something like 106 or 107).
 
